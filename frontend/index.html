@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascending Fitness - Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-container">
+                <img src="./images/logo.jpg" alt="Ascending Fitness" class="logo-img">
+                <h1>Ascending Fitness</h1>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn" id="loginSubmitBtn">
+                    <span id="loginSubmitText">Login</span>
+                    <span id="loginSubmitSpinner" class="spinner hidden">Loading...</span>
+                </button>
+                
+                <div id="loginError" class="error-message" style="display: none;"></div>
+                <div id="loginSuccess" class="success-message" style="display: none;"></div>
+            </form>
+            
+            <div class="form-nav">
+                <p>Don't have an account? <a href="/register.html">Register</a></p>
+                <p>Are you a trainer? <a href="/trainer-login.html">Trainer Login</a></p>
+            </div>
+        </div>
+        
+        <div class="version-info">
+            v3.0.0
+        </div>
+    </div>
+
+    <script>
+        // Handle login
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+            const loginSubmitText = document.getElementById('loginSubmitText');
+            const loginSubmitSpinner = document.getElementById('loginSubmitSpinner');
+            const errorDiv = document.getElementById('loginError');
+            const successDiv = document.getElementById('loginSuccess');
+            
+            // Show loading state
+            loginSubmitBtn.disabled = true;
+            loginSubmitText.classList.add('hidden');
+            loginSubmitSpinner.classList.remove('hidden');
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store token
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userRole', data.user.role);
+                    
+                    // Show success message
+                    successDiv.textContent = data.message;
+                    successDiv.style.display = 'block';
+                    
+                    // Redirect based on role
+                    setTimeout(() => {
+                        if (data.user.role === 'trainer') {
+                            window.location.href = '/dashboard.html';
+                        } else {
+                            window.location.href = '/dashboard.html';
+                        }
+                    }, 1000);
+                } else {
+                    // Show error message
+                    errorDiv.textContent = data.message || 'Login failed';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorDiv.textContent = 'An error occurred during login';
+                errorDiv.style.display = 'block';
+            } finally {
+                // Reset button state
+                loginSubmitBtn.disabled = false;
+                loginSubmitText.classList.remove('hidden');
+                loginSubmitSpinner.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

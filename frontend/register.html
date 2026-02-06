@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascending Fitness - Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-container">
+                <img src="./images/logo.jpg" alt="Ascending Fitness" class="logo-img">
+                <h1>Ascending Fitness</h1>
+            </div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" name="name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" name="password" placeholder="Create a password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPhone">Phone Number (Optional)</label>
+                    <input type="tel" id="regPhone" name="phone" placeholder="Enter your phone number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="regRole">Account Type</label>
+                    <select id="regRole" name="role" class="form-group input" required>
+                        <option value="client" selected>Client</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="btn" id="regSubmitBtn" onclick="handleRegistration()">
+                    <span id="regSubmitText">Register</span>
+                    <span id="regSubmitSpinner" class="spinner hidden"></span>
+                </button>
+                
+                <div id="registerError" class="error-message" style="display: none;"></div>
+                <div id="registerSuccess" class="success-message" style="display: none;"></div>
+            </form>
+            
+            <div class="form-nav">
+                <p>Already have an account? <a href="/">Login</a></p>
+            </div>
+        </div>
+        
+        <div class="version-info">
+            v3.0.0
+        </div>
+    </div>
+
+    <script>
+        // Handle registration
+        async function handleRegistration() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const phone = document.getElementById('regPhone').value;
+            const role = document.getElementById('regRole').value;
+            const regSubmitBtn = document.getElementById('regSubmitBtn');
+            const regSubmitText = document.getElementById('regSubmitText');
+            const regSubmitSpinner = document.getElementById('regSubmitSpinner');
+            const errorDiv = document.getElementById('registerError');
+            const successDiv = document.getElementById('registerSuccess');
+            
+            // Show loading state
+            regSubmitBtn.disabled = true;
+            regSubmitText.classList.add('hidden');
+            regSubmitSpinner.classList.remove('hidden');
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password,
+                        phone: phone || null,
+                        role: role
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store token
+                    localStorage.setItem('authToken', data.token);
+                    
+                    // Show success message
+                    successDiv.textContent = data.message;
+                    successDiv.style.display = 'block';
+                    
+                    // Redirect to dashboard after a delay
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 1500);
+                } else {
+                    // Show error message
+                    errorDiv.textContent = data.message || 'Registration failed';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                errorDiv.textContent = 'An error occurred during registration';
+                errorDiv.style.display = 'block';
+            } finally {
+                // Reset button state
+                regSubmitBtn.disabled = false;
+                regSubmitText.classList.remove('hidden');
+                regSubmitSpinner.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

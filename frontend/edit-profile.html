@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Ascending Fitness</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container" style="justify-content: center;">
+                    <img src="./images/logo.jpg" alt="Ascending Fitness" class="logo-img" style="width: 80px; height: 80px; border-radius: 50%; margin: 10px auto;">
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="/dashboard.html"><i>📊</i> Dashboard</a></li>
+                    <li><a href="/profile.html"><i>👤</i> Profile</a></li>
+                    <li><a href="#" class="active"><i>✏️</i> Edit Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="top-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <h1>Edit Profile</h1>
+                <div class="header-actions">
+                    <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                </div>
+            </header>
+
+            <div class="edit-profile-content">
+                <form id="profileForm">
+                    <div class="section">
+                        <h3>Personal Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="user.name" placeholder="Enter your full name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="user.email" placeholder="Enter your email">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="user.phone" placeholder="Enter your phone number">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <select id="age" name="profile.age">
+                                    <option value="">Select age</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="height">Height</label>
+                                <select id="height" name="profile.height">
+                                    <option value="">Select height</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="weight">Weight (lbs)</label>
+                                <select id="weight" name="profile.weight">
+                                    <option value="">Select weight</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="profile.gender">
+                                    <option value="">Select gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Non-binary">Non-binary</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Health Information</h3>
+                        
+                        <div class="form-group">
+                            <label>Do you have any medical conditions?</label>
+                            <select id="medicalConditionsYesNo" name="profile.medicalConditionsYesNo" onchange="toggleDescriptionField('medicalConditionsYesNo', 'medicalConditionsDescriptionGroup')">
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        
+                        <div id="medicalConditionsDescriptionGroup" class="conditional-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="medicalConditions">Please describe your medical conditions</label>
+                                <textarea id="medicalConditions" name="profile.medicalConditions" placeholder="Describe any medical conditions..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Are you currently taking medications?</label>
+                            <select id="medicationsYesNo" name="profile.medicationsYesNo" onchange="toggleDescriptionField('medicationsYesNo', 'medicationsDescriptionGroup')">
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        
+                        <div id="medicationsDescriptionGroup" class="conditional-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="medications">Please list your medications</label>
+                                <textarea id="medications" name="profile.medications" placeholder="List medications..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Have you had any injuries or surgeries?</label>
+                            <select id="injuriesSurgeriesYesNo" name="profile.injuriesSurgeriesYesNo" onchange="toggleDescriptionField('injuriesSurgeriesYesNo', 'injuriesSurgeriesDescriptionGroup')">
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        
+                        <div id="injuriesSurgeriesDescriptionGroup" class="conditional-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="injuriesSurgeries">Please describe your injuries or surgeries</label>
+                                <textarea id="injuriesSurgeries" name="profile.injuriesSurgeries" placeholder="Describe injuries or surgeries..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Do you have any allergies?</label>
+                            <select id="allergiesYesNo" name="profile.allergiesYesNo" onchange="toggleDescriptionField('allergiesYesNo', 'allergiesDescriptionGroup')">
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        
+                        <div id="allergiesDescriptionGroup" class="conditional-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="allergies">Please list your allergies</label>
+                                <textarea id="allergies" name="profile.allergies" placeholder="List allergies..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Fitness Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fitnessLevel">Current Fitness Level</label>
+                                <select id="fitnessLevel" name="profile.fitnessLevel">
+                                    <option value="">Select fitness level</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                    <option value="Athlete">Athlete</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="activityLevel">Activity Level</label>
+                                <select id="activityLevel" name="profile.activityLevel">
+                                    <option value="">Select activity level</option>
+                                    <option value="Sedentary">Sedentary (little or no exercise)</option>
+                                    <option value="Lightly Active">Lightly Active (light exercise 1-3 days/week)</option>
+                                    <option value="Moderately Active">Moderately Active (moderate exercise 3-5 days/week)</option>
+                                    <option value="Very Active">Very Active (hard exercise 6-7 days/week)</option>
+                                    <option value="Extremely Active">Extremely Active (very hard exercise & physical job)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Have you worked out before?</label>
+                            <select id="workedOutBeforeYesNo" name="profile.workedOutBeforeYesNo" onchange="toggleDescriptionField('workedOutBeforeYesNo', 'workedOutBeforeDescriptionGroup')">
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        
+                        <div id="workedOutBeforeDescriptionGroup" class="conditional-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="workedOutBefore">Please describe your workout history</label>
+                                <textarea id="workedOutBefore" name="profile.workedOutBefore" placeholder="Describe your previous workout experience..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Do you have a preference for certain types of exercises?</label>
+                            <select id="exerciseTypesYesNo" name="profile.exerciseTypesYesNo" onchange="toggleDescriptionField('exerciseTypesYesNo', 'exerciseTypesDescriptionGroup')">
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        
+                        <div id="exerciseTypesDescriptionGroup" class="conditional-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="exerciseTypes">Please describe your exercise preferences</label>
+                                <textarea id="exerciseTypes" name="profile.exerciseTypes" placeholder="Describe your preferred exercise types..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Do you have access to exercise equipment?</label>
+                            <select id="equipmentAccessYesNo" name="profile.equipmentAccessYesNo" onchange="toggleDescriptionField('equipmentAccessYesNo', 'equipmentAccessDescriptionGroup')">
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        
+                        <div id="equipmentAccessDescriptionGroup" class="conditional-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="equipmentAccess">Please describe your equipment access</label>
+                                <textarea id="equipmentAccess" name="profile.equipmentAccess" placeholder="Describe your equipment access..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Fitness Goals</h3>
+                        
+                        <div class="form-group">
+                            <label for="primaryGoal">Primary Goal</label>
+                            <select id="primaryGoal" name="profile.primaryGoal">
+                                <option value="">Select primary goal</option>
+                                <option value="Weight Loss">Weight Loss</option>
+                                <option value="Muscle Gain">Muscle Gain</option>
+                                <option value="Strength Training">Strength Training</option>
+                                <option value="Endurance">Endurance</option>
+                                <option value="General Fitness">General Fitness</option>
+                                <option value="Sports Performance">Sports Performance</option>
+                                <option value="Rehabilitation">Rehabilitation</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="secondaryGoals">Secondary Goals</label>
+                            <textarea id="secondaryGoals" name="profile.secondaryGoals" placeholder="List any additional fitness goals..."></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="targetTimeline">Target Timeline</label>
+                                <select id="targetTimeline" name="profile.targetTimeline">
+                                    <option value="">Select timeline</option>
+                                    <option value="1-3 months">1-3 months</option>
+                                    <option value="3-6 months">3-6 months</option>
+                                    <option value="6-12 months">6-12 months</option>
+                                    <option value="1+ years">1+ years</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sessionsPerWeek">Sessions Per Week</label>
+                                <select id="sessionsPerWeek" name="profile.sessionsPerWeek">
+                                    <option value="">Select frequency</option>
+                                    <option value="1 session">1 session</option>
+                                    <option value="2 sessions">2 sessions</option>
+                                    <option value="3 sessions">3 sessions</option>
+                                    <option value="4 sessions">4 sessions</option>
+                                    <option value="5 sessions">5 sessions</option>
+                                    <option value="6 sessions">6 sessions</option>
+                                    <option value="7 sessions">7 sessions</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Preferences</h3>
+                        
+                        <div class="form-group">
+                            <label for="favoriteExercises">Favorite Exercises</label>
+                            <textarea id="favoriteExercises" name="profile.favoriteExercises" placeholder="List your favorite exercises..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exercisesToAvoid">Exercises to Avoid</label>
+                            <textarea id="exercisesToAvoid" name="profile.exercisesToAvoid" placeholder="List exercises to avoid..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="preferredSchedule">Preferred Workout Schedule</label>
+                            <textarea id="preferredSchedule" name="profile.preferredSchedule" placeholder="Describe your preferred workout schedule..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dietaryRestrictions">Dietary Restrictions</label>
+                            <textarea id="dietaryRestrictions" name="profile.dietaryRestrictions" placeholder="List any dietary restrictions..."></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="sleepAverage">Avg Sleep Hours</label>
+                                <select id="sleepAverage" name="profile.sleepAverage">
+                                    <option value="">Select hours</option>
+                                    <option value="Less than 5">Less than 5</option>
+                                    <option value="5-6 hours">5-6 hours</option>
+                                    <option value="6-7 hours">6-7 hours</option>
+                                    <option value="7-8 hours">7-8 hours</option>
+                                    <option value="8+ hours">8+ hours</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Emergency Contact</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emergencyName">Contact Name</label>
+                                <input type="text" id="emergencyName" name="profile.emergencyName" placeholder="Enter emergency contact name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="emergencyPhone">Contact Phone</label>
+                                <input type="tel" id="emergencyPhone" name="profile.emergencyPhone" placeholder="Enter emergency contact phone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emergencyRelationship">Relationship</label>
+                            <input type="text" id="emergencyRelationship" name="profile.emergencyRelationship" placeholder="Enter relationship to emergency contact">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="saveChangesBtn">
+                            <span id="saveChangesText">Save Changes</span>
+                            <span id="saveChangesSpinner" class="spinner hidden">Saving...</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='/profile.html'">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="version-info">
+        v3.0.0
+    </div>
+
+    <script>
+        // Check authentication
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = '/';
+            exit;
+        }
+
+        // Toggle description field based on selection (reusable function)
+        function toggleDescriptionField(yesNoFieldId, descriptionGroupId) {
+            const selectElement = document.getElementById(yesNoFieldId);
+            const descriptionGroup = document.getElementById(descriptionGroupId);
+            
+            if (selectElement && descriptionGroup) {
+                if (selectElement.value.toLowerCase() === 'yes') {
+                    descriptionGroup.style.display = 'block';
+                } else {
+                    descriptionGroup.style.display = 'none';
+                    // Clear the description field when "No" is selected
+                    const descriptionField = descriptionGroup.querySelector('textarea');
+                    if (descriptionField) {
+                        descriptionField.value = '';
+                    }
+                }
+            }
+        }
+
+        // Populate dropdowns with options after page loads
+        function populateDropdowns() {
+            const ageSelect = document.getElementById('age');
+            if (ageSelect && ageSelect.children.length <= 1) { // Only if options haven't been populated yet
+                for (let i = 18; i <= 80; i++) {
+                    const option = new Option(i, i);
+                    ageSelect.add(option);
+                }
+            }
+
+            const heightSelect = document.getElementById('height');
+            if (heightSelect && heightSelect.children.length <= 1) { // Only if options haven't been populated yet
+                for (let ft = 4; ft <= 7; ft++) {
+                    for (let inch = 0; inch <= 11; inch++) {
+                        const heightVal = `${ft}'${inch}"`;
+                        const option = new Option(heightVal, heightVal);
+                        heightSelect.add(option);
+                    }
+                }
+            }
+
+            const weightSelect = document.getElementById('weight');
+            if (weightSelect && weightSelect.children.length <= 1) { // Only if options haven't been populated yet
+                for (let w = 100; w <= 400; w += 5) {
+                    const option = new Option(`${w} lbs`, w);
+                    weightSelect.add(option);
+                }
+            }
+        }
+
+        // Load profile data
+        async function loadProfileData() {
+            try {
+                const response = await fetch('/api/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        localStorage.removeItem('authToken');
+                        window.location.href = '/';
+                    }
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                // Populate user fields
+                document.getElementById('name').value = data.user.name || '';
+                document.getElementById('email').value = data.user.email || '';
+                document.getElementById('phone').value = data.user.phone || '';
+                
+                // Populate profile fields
+                const profile = data.profile;
+                
+                // Personal Information
+                document.getElementById('age').value = profile.age || '';
+                document.getElementById('height').value = profile.height || '';
+                document.getElementById('weight').value = profile.weight || '';
+                document.getElementById('gender').value = profile.gender || '';
+                
+                // Health Information
+                // Set medical conditions field and determine Yes/No selection
+                if (profile.medicalConditions) {
+                    document.getElementById('medicalConditions').value = profile.medicalConditions;
+                    document.getElementById('medicalConditionsYesNo').value = 'Yes';
+                    document.getElementById('medicalConditionsDescriptionGroup').style.display = 'block';
+                } else {
+                    document.getElementById('medicalConditionsYesNo').value = '';
+                }
+                
+                if (profile.medications) {
+                    document.getElementById('medications').value = profile.medications;
+                    document.getElementById('medicationsYesNo').value = 'Yes';
+                    document.getElementById('medicationsDescriptionGroup').style.display = 'block';
+                } else {
+                    document.getElementById('medicationsYesNo').value = '';
+                }
+                
+                if (profile.injuriesSurgeries) {
+                    document.getElementById('injuriesSurgeries').value = profile.injuriesSurgeries;
+                    document.getElementById('injuriesSurgeriesYesNo').value = 'Yes';
+                    document.getElementById('injuriesSurgeriesDescriptionGroup').style.display = 'block';
+                } else {
+                    document.getElementById('injuriesSurgeriesYesNo').value = '';
+                }
+                
+                if (profile.allergies) {
+                    document.getElementById('allergies').value = profile.allergies;
+                    document.getElementById('allergiesYesNo').value = 'Yes';
+                    document.getElementById('allergiesDescriptionGroup').style.display = 'block';
+                } else {
+                    document.getElementById('allergiesYesNo').value = '';
+                }
+                
+                // Fitness Information
+                document.getElementById('fitnessLevel').value = profile.fitnessLevel || '';
+                document.getElementById('activityLevel').value = profile.activityLevel || '';
+                
+                if (profile.workedOutBefore) {
+                    document.getElementById('workedOutBefore').value = profile.workedOutBefore;
+                    document.getElementById('workedOutBeforeYesNo').value = 'Yes';
+                    document.getElementById('workedOutBeforeDescriptionGroup').style.display = 'block';
+                } else {
+                    document.getElementById('workedOutBeforeYesNo').value = '';
+                }
+                
+                if (profile.exerciseTypes) {
+                    document.getElementById('exerciseTypes').value = profile.exerciseTypes;
+                    document.getElementById('exerciseTypesYesNo').value = 'Yes';
+                    document.getElementById('exerciseTypesDescriptionGroup').style.display = 'block';
+                } else {
+                    document.getElementById('exerciseTypesYesNo').value = '';
+                }
+                
+                if (profile.equipmentAccess) {
+                    document.getElementById('equipmentAccess').value = profile.equipmentAccess;
+                    document.getElementById('equipmentAccessYesNo').value = 'Yes';
+                    document.getElementById('equipmentAccessDescriptionGroup').style.display = 'block';
+                } else {
+                    document.getElementById('equipmentAccessYesNo').value = '';
+                }
+                
+                // Fitness Goals
+                document.getElementById('primaryGoal').value = profile.primaryGoal || '';
+                document.getElementById('secondaryGoals').value = profile.secondaryGoals || '';
+                document.getElementById('targetTimeline').value = profile.targetTimeline || '';
+                document.getElementById('sessionsPerWeek').value = profile.sessionsPerWeek || '';
+                
+                // Preferences
+                document.getElementById('favoriteExercises').value = profile.favoriteExercises || '';
+                document.getElementById('exercisesToAvoid').value = profile.exercisesToAvoid || '';
+                document.getElementById('preferredSchedule').value = profile.preferredSchedule || '';
+                document.getElementById('dietaryRestrictions').value = profile.dietaryRestrictions || '';
+                document.getElementById('sleepAverage').value = profile.sleepAverage || '';
+                
+                // Emergency Contact
+                document.getElementById('emergencyName').value = profile.emergencyName || '';
+                document.getElementById('emergencyPhone').value = profile.emergencyPhone || '';
+                document.getElementById('emergencyRelationship').value = profile.emergencyRelationship || '';
+                
+            } catch (error) {
+                console.error('Error loading profile data:', error);
+            }
+        }
+
+        // Save profile data
+        async function saveProfileData(formData) {
+            try {
+                const response = await fetch('/api/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                alert(data.message || 'Profile updated successfully!');
+                
+                // Redirect to profile page after saving
+                setTimeout(() => {
+                    window.location.href = '/profile.html';
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error saving profile data:', error);
+                alert('Error saving profile: ' + error.message);
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Disable save button and show spinner
+            const saveBtn = document.getElementById('saveChangesBtn');
+            const saveText = document.getElementById('saveChangesText');
+            const saveSpinner = document.getElementById('saveChangesSpinner');
+            
+            saveBtn.disabled = true;
+            saveText.classList.add('hidden');
+            saveSpinner.classList.remove('hidden');
+            
+            try {
+                // Create form data object
+                const formData = {};
+                const formElements = e.target.elements;
+                
+                // Process each form element
+                for (let i = 0; i < formElements.length; i++) {
+                    const element = formElements[i];
+                    if (element.name && element.type !== 'button' && element.type !== 'submit') {
+                        // Split the name by dots to handle nested properties (e.g., user.name, profile.age)
+                        const parts = element.name.split('.');
+                        if (parts.length === 2) {
+                            const parent = parts[0];
+                            const child = parts[1];
+                            
+                            if (!formData[parent]) {
+                                formData[parent] = {};
+                            }
+                            
+                            // Handle different input types
+                            if (element.type === 'checkbox') {
+                                formData[parent][child] = element.checked;
+                            } else if (element.type === 'radio') {
+                                if (element.checked) {
+                                    formData[parent][child] = element.value;
+                                }
+                            } else {
+                                formData[parent][child] = element.value || null;
+                            }
+                        }
+                    }
+                }
+                
+                // Special handling for conditional fields - ensure the main field gets the Yes/No value
+                const yesNoFields = [
+                    'medicalConditionsYesNo', 'medicationsYesNo', 'injuriesSurgeriesYesNo', 
+                    'allergiesYesNo', 'workedOutBeforeYesNo', 'exerciseTypesYesNo', 'equipmentAccessYesNo'
+                ];
+                
+                for (const fieldName of yesNoFields) {
+                    const selectElement = document.getElementById(fieldName);
+                    if (selectElement && selectElement.value === 'No') {
+                        // If No was selected, clear the corresponding description field
+                        const parts = selectElement.name.split('.');
+                        if (parts.length === 2) {
+                            const parent = parts[0];
+                            const fieldBaseName = fieldName.replace('YesNo', '');
+                            const child = fieldBaseName.charAt(0).toLowerCase() + fieldBaseName.slice(1);
+                            
+                            if (formData[parent]) {
+                                formData[parent][child] = null;
+                            }
+                        }
+                    }
+                }
+                
+                // Save the data
+                await saveProfileData(formData);
+            } catch (error) {
+                console.error('Error processing form:', error);
+                alert('Error processing form: ' + error.message);
+            } finally {
+                // Re-enable save button and hide spinner
+                saveBtn.disabled = false;
+                saveText.classList.remove('hidden');
+                saveSpinner.classList.add('hidden');
+            }
+        });
+
+        // Logout function
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userRole');
+            window.location.href = '/';
+        });
+
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfileData();
+            populateDropdowns();
+        });
+    </script>
+</body>
+</html>

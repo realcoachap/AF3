@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Ascending Fitness</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container" style="justify-content: center;">
+                    <img src="./images/logo.jpg" alt="Ascending Fitness" class="logo-img" style="width: 80px; height: 80px; border-radius: 50%; margin: 10px auto;">
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="active"><i>📊</i> Dashboard</a></li>
+                    <li><a href="/profile.html"><i>👤</i> Profile</a></li>
+                    <li><a href="/edit-profile.html"><i>✏️</i> Edit Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="top-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <h1>Dashboard</h1>
+                <div class="header-actions">
+                    <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <div class="welcome-section">
+                    <h2>Welcome to Ascending Fitness!</h2>
+                    <p id="welcomeMessage">Hello, <span id="userName">User</span>! Ready to achieve your fitness goals?</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Workouts This Week</h3>
+                        <p id="workoutsThisWeek">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Progress</h3>
+                        <p id="progressPercentage">0%</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Streak</h3>
+                        <p id="currentStreak">0 days</p>
+                    </div>
+                </div>
+
+                <div class="upcoming-section">
+                    <h3>Your Plan</h3>
+                    <p id="userPlan">Complete your fitness profile to get personalized recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="version-info">
+        v3.0.0
+    </div>
+
+    <script>
+        // Check authentication
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = '/';
+            exit;
+        }
+
+        // Load user data
+        async function loadUserData() {
+            try {
+                const response = await fetch('/api/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        localStorage.removeItem('authToken');
+                        window.location.href = '/';
+                    }
+                    return;
+                }
+                
+                const data = await response.json();
+                document.getElementById('userName').textContent = data.user.name;
+                
+                // Display welcome message based on time of day
+                const hour = new Date().getHours();
+                let greeting = 'Good morning';
+                if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
+                else if (hour >= 17) greeting = 'Good evening';
+                
+                document.getElementById('welcomeMessage').innerHTML = `${greeting}, <span>${data.user.name}</span>! Ready to achieve your fitness goals?`;
+                
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        // Logout function
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userRole');
+            window.location.href = '/';
+        });
+
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        });
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadUserData);
+    </script>
+</body>
+</html>

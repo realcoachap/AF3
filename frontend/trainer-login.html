@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascending Fitness - Trainer Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-container">
+                <img src="./images/logo.jpg" alt="Ascending Fitness" class="logo-img">
+                <h1>Ascending Fitness</h1>
+            </div>
+            
+            <form id="trainerLoginForm">
+                <div class="form-group">
+                    <label for="trainerEmail">Trainer Email</label>
+                    <input type="email" id="trainerEmail" name="email" placeholder="Enter your trainer email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="trainerPassword">Password</label>
+                    <input type="password" id="trainerPassword" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn" id="trainerLoginSubmitBtn">
+                    <span id="trainerLoginSubmitText">Trainer Login</span>
+                    <span id="trainerLoginSubmitSpinner" class="spinner hidden">Loading...</span>
+                </button>
+                
+                <div id="trainerLoginError" class="error-message" style="display: none;"></div>
+                <div id="trainerLoginSuccess" class="success-message" style="display: none;"></div>
+            </form>
+            
+            <div class="form-nav">
+                <p>Need to login as a client? <a href="/">Client Login</a></p>
+                <p>Don't have an account? <a href="/register.html">Register</a></p>
+            </div>
+        </div>
+        
+        <div class="version-info">
+            v3.0.0
+        </div>
+    </div>
+
+    <script>
+        // Handle trainer login
+        document.getElementById('trainerLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('trainerEmail').value;
+            const password = document.getElementById('trainerPassword').value;
+            const loginSubmitBtn = document.getElementById('trainerLoginSubmitBtn');
+            const loginSubmitText = document.getElementById('trainerLoginSubmitText');
+            const loginSubmitSpinner = document.getElementById('trainerLoginSubmitSpinner');
+            const errorDiv = document.getElementById('trainerLoginError');
+            const successDiv = document.getElementById('trainerLoginSuccess');
+            
+            // Show loading state
+            loginSubmitBtn.disabled = true;
+            loginSubmitText.classList.add('hidden');
+            loginSubmitSpinner.classList.remove('hidden');
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Verify that user is a trainer
+                    if (data.user.role !== 'trainer') {
+                        errorDiv.textContent = 'This login is for trainers only';
+                        errorDiv.style.display = 'block';
+                        return;
+                    }
+                    
+                    // Store token
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userRole', data.user.role);
+                    
+                    // Show success message
+                    successDiv.textContent = data.message;
+                    successDiv.style.display = 'block';
+                    
+                    // Redirect to trainer dashboard
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 1000);
+                } else {
+                    // Show error message
+                    errorDiv.textContent = data.message || 'Login failed';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Trainer login error:', error);
+                errorDiv.textContent = 'An error occurred during login';
+                errorDiv.style.display = 'block';
+            } finally {
+                // Reset button state
+                loginSubmitBtn.disabled = false;
+                loginSubmitText.classList.remove('hidden');
+                loginSubmitSpinner.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Ascending Fitness</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container" style="justify-content: center;">
+                    <img src="./images/logo.jpg" alt="Ascending Fitness" class="logo-img" style="width: 80px; height: 80px; border-radius: 50%; margin: 10px auto;">
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="/dashboard.html"><i>📊</i> Dashboard</a></li>
+                    <li><a href="#" class="active"><i>👤</i> Profile</a></li>
+                    <li><a href="/edit-profile.html"><i>✏️</i> Edit Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="top-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <h1>My Profile</h1>
+                <div class="header-actions">
+                    <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                </div>
+            </header>
+
+            <div class="profile-content">
+                <div class="profile-header">
+                    <div class="profile-picture">
+                        <img src="./images/default-avatar.png" alt="Profile Picture" id="profilePicDisplay">
+                    </div>
+                    <div class="profile-info">
+                        <h2 id="profileName">Loading...</h2>
+                        <p id="profileEmail">Loading...</p>
+                        <p id="profileRole">Loading...</p>
+                    </div>
+                </div>
+
+                <div class="profile-details">
+                    <div class="section">
+                        <h3>Personal Information</h3>
+                        <div class="detail-row">
+                            <span class="label">Age:</span>
+                            <span id="profileAge" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Height:</span>
+                            <span id="profileHeight" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Weight:</span>
+                            <span id="profileWeight" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Gender:</span>
+                            <span id="profileGender" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Phone:</span>
+                            <span id="profilePhone" class="value">-</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Fitness Information</h3>
+                        <div class="detail-row">
+                            <span class="label">Fitness Level:</span>
+                            <span id="profileFitnessLevel" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Primary Goal:</span>
+                            <span id="profilePrimaryGoal" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Target Timeline:</span>
+                            <span id="profileTargetTimeline" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Sessions Per Week:</span>
+                            <span id="profileSessionsPerWeek" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Activity Level:</span>
+                            <span id="profileActivityLevel" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Sleep Average:</span>
+                            <span id="profileSleepAverage" class="value">-</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Health Information</h3>
+                        <div class="detail-row">
+                            <span class="label">Medical Conditions:</span>
+                            <span id="profileMedicalConditions" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Medications:</span>
+                            <span id="profileMedications" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Injuries/Surgeries:</span>
+                            <span id="profileInjuriesSurgeries" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Allergies:</span>
+                            <span id="profileAllergies" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Workout History:</span>
+                            <span id="profileWorkedOutBefore" class="value">-</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Preferences</h3>
+                        <div class="detail-row">
+                            <span class="label">Exercise Types:</span>
+                            <span id="profileExerciseTypes" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Equipment Access:</span>
+                            <span id="profileEquipmentAccess" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Favorite Exercises:</span>
+                            <span id="profileFavoriteExercises" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Exercises to Avoid:</span>
+                            <span id="profileExercisesToAvoid" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Preferred Schedule:</span>
+                            <span id="profilePreferredSchedule" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Dietary Restrictions:</span>
+                            <span id="profileDietaryRestrictions" class="value">-</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Emergency Contact</h3>
+                        <div class="detail-row">
+                            <span class="label">Name:</span>
+                            <span id="profileEmergencyName" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Phone:</span>
+                            <span id="profileEmergencyPhone" class="value">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Relationship:</span>
+                            <span id="profileEmergencyRelationship" class="value">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="version-info">
+        v3.0.0
+    </div>
+
+    <script>
+        // Check authentication
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = '/';
+            exit;
+        }
+
+        // Load profile data
+        async function loadProfileData() {
+            try {
+                const response = await fetch('/api/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        localStorage.removeItem('authToken');
+                        window.location.href = '/';
+                    }
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                // Update user information
+                document.getElementById('profileName').textContent = data.user.name;
+                document.getElementById('profileEmail').textContent = data.user.email;
+                document.getElementById('profileRole').textContent = `Role: ${data.user.role}`;
+                document.getElementById('profilePhone').textContent = data.user.phone || '-';
+                
+                // Update profile information
+                const profile = data.profile;
+                
+                // Personal Information
+                document.getElementById('profileAge').textContent = profile.age || '-';
+                document.getElementById('profileHeight').textContent = profile.height || '-';
+                document.getElementById('profileWeight').textContent = profile.weight || '-';
+                document.getElementById('profileGender').textContent = profile.gender || '-';
+                
+                // Fitness Information
+                document.getElementById('profileFitnessLevel').textContent = profile.fitnessLevel || '-';
+                document.getElementById('profilePrimaryGoal').textContent = profile.primaryGoal || '-';
+                document.getElementById('profileTargetTimeline').textContent = profile.targetTimeline || '-';
+                document.getElementById('profileSessionsPerWeek').textContent = profile.sessionsPerWeek || '-';
+                document.getElementById('profileActivityLevel').textContent = profile.activityLevel || '-';
+                document.getElementById('profileSleepAverage').textContent = profile.sleepAverage || '-';
+                
+                // Health Information
+                document.getElementById('profileMedicalConditions').textContent = profile.medicalConditions || '-';
+                document.getElementById('profileMedications').textContent = profile.medications || '-';
+                document.getElementById('profileInjuriesSurgeries').textContent = profile.injuriesSurgeries || '-';
+                document.getElementById('profileAllergies').textContent = profile.allergies || '-';
+                document.getElementById('profileWorkedOutBefore').textContent = profile.workedOutBefore || '-';
+                
+                // Preferences
+                document.getElementById('profileExerciseTypes').textContent = profile.exerciseTypes || '-';
+                document.getElementById('profileEquipmentAccess').textContent = profile.equipmentAccess || '-';
+                document.getElementById('profileFavoriteExercises').textContent = profile.favoriteExercises || '-';
+                document.getElementById('profileExercisesToAvoid').textContent = profile.exercisesToAvoid || '-';
+                document.getElementById('profilePreferredSchedule').textContent = profile.preferredSchedule || '-';
+                document.getElementById('profileDietaryRestrictions').textContent = profile.dietaryRestrictions || '-';
+                
+                // Emergency Contact
+                document.getElementById('profileEmergencyName').textContent = profile.emergencyName || '-';
+                document.getElementById('profileEmergencyPhone').textContent = profile.emergencyPhone || '-';
+                document.getElementById('profileEmergencyRelationship').textContent = profile.emergencyRelationship || '-';
+                
+            } catch (error) {
+                console.error('Error loading profile data:', error);
+            }
+        }
+
+        // Logout function
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userRole');
+            window.location.href = '/';
+        });
+
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        });
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadProfileData);
+    </script>
+</body>
+</html>
