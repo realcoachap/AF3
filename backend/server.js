@@ -27,9 +27,18 @@ const pool = new Pool({
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.error('Database connection error:', err.stack);
+    console.error('Connection string being used:', process.env.DATABASE_URL ? 'HIDDEN (contains DATABASE_URL)' : 
+                  process.env.POSTGRES_URL ? 'HIDDEN (contains POSTGRES_URL)' : 
+                  'Using default: postgresql://localhost:5432/ascending_fitness');
   } else {
     console.log('Connected to PostgreSQL database');
+    console.log('Current time from DB:', res.rows[0].now);
   }
+});
+
+// Add error handling for pool
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
 });
 
 // Initialize database tables
